@@ -6,6 +6,7 @@ public class TestDownloadParameters {
 	public String filename;
 	public String path;
 	public String redirectPath;
+	public String title;
 	public int minimumSize;
 	public boolean expectFail;
 

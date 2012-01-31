@@ -58,6 +58,7 @@ public class AbstractResourceDownloaderTest extends AbstractHttpClientTest {
 
 		ResourceDownloader downloader = new ResourceDownloader(resourceLoader, url);
 		downloader.setDownloadDirectory(new File("."));
+		downloader.setTitle(parameters.title);
 
 		File outputFile = new File(downloader.getDownloadDirectory(), expectedFilename);
 		if (outputFile.exists()) {
