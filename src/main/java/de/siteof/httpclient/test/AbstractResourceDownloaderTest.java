@@ -28,13 +28,16 @@ public class AbstractResourceDownloaderTest extends AbstractHttpClientTest {
 	protected void doTestResourceDownloader(IResourceLoader resourceLoader, TestDownloadParameters parameters) throws Exception {
 		String url = this.getServerUrl() + parameters.path;
 
-		final ByteArrayOutputStream out = new ByteArrayOutputStream();
+		final AtomicReference<TestByteArrayOutputStream> outHolder =
+				new AtomicReference<TestByteArrayOutputStream>();
 		final AtomicReference<String> filenameHolder = new AtomicReference<String>();
 
 		ResourceDownloader downloader = new ResourceDownloader(resourceLoader, url) {
 			@Override
 			public OutputStream createOutputStream() {
 				filenameHolder.set(this.getFilename());
+				TestByteArrayOutputStream out = new TestByteArrayOutputStream();
+				outHolder.set(out);
 				return out;
 			}
 		};
@@ -45,7 +48,8 @@ public class AbstractResourceDownloaderTest extends AbstractHttpClientTest {
 			Assert.assertFalse("downloadResult", result);
 		} else {
 			Assert.assertTrue("downloadResult", result);
-			out.flush();
+			TestByteArrayOutputStream out = outHolder.get();
+			Assert.assertTrue("closed", out.isClosed());
 			byte[] actualData = out.toByteArray();
 			assertEquals("data", parameters.data, actualData);
 			Assert.assertEquals("filename", parameters.filename, filenameHolder.get());
