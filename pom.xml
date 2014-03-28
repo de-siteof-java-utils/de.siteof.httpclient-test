@@ -12,11 +12,6 @@
 	<dependencies>
 		<dependency>
 			<groupId>de.siteof</groupId>
-			<artifactId>shared</artifactId>
-			<version>1.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>de.siteof</groupId>
 			<artifactId>resource</artifactId>
 			<version>1.0.0</version>
 		</dependency>
